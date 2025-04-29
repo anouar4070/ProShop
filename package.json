@@ -13,6 +13,8 @@
   "author": "Anouar Garbaa",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "colors": "^1.4.0",
     "express": "^5.1.0",
     "mongoose": "^8.14.0"
   },
