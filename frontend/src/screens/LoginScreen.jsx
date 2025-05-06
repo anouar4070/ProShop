@@ -18,8 +18,12 @@ const LoginScreen = () => {
   const [login, { isLoading }] = useLoginMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
+//search is the query string part of the URL, e.g., ?redirect=/cart.
+//useLocation() gives you access to the current URL.
   const { search } = useLocation();
+  //Creates an object that lets you read URL parameters easily.
   const sp = new URLSearchParams(search);
+  //Retrieves the value of the redirect query parameter.
   const redirect = sp.get("redirect") || "/";
 
   useEffect(() => {
@@ -33,7 +37,7 @@ const LoginScreen = () => {
     try {
       const res = await login({ email, password }).unwrap();
       dispatch(setCredentials({ ...res }));
-      navigate(redirect);
+      navigate(redirect); //if redirect value is empty, navigate to '/'
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
