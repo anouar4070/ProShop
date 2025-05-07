@@ -11,12 +11,13 @@ export const updateCart = (state) => {
   // calculate shipping price (If order is over $100 then free, else $10 shipping)
   state.shippingPrice = addDecimals(state.itemsPrice > 100 ? 0 : 10);
   // calculate tax price (15% tax)
-  state.taxPrice = addDecimals(Number((0.15 * state.itemsPrice).toFixed(2)));
+  state.taxPrice = addDecimals(Number(0.15 * state.itemsPrice));
   // calculate total price
-  state.totalPrice =
+  state.totalPrice = addDecimals(
     Number(state.itemsPrice) +
-    Number(state.shippingPrice) +
-    Number(state.taxPrice).toFixed(2);
+      Number(state.shippingPrice) +
+      Number(state.taxPrice)
+  );
 
   localStorage.setItem("cart", JSON.stringify(state));
 
