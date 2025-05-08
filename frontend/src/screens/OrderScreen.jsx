@@ -1,16 +1,6 @@
 import { useEffect } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import {
-  Form,
-  Button,
-  Row,
-  Col,
-  ListGroup,
-  Image,
-  Card,
-  ListGroupItem,
-} from "react-bootstrap";
-
+import { Link, useParams } from "react-router-dom";
+import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import {
   useGetOrderDetailsQuery,
