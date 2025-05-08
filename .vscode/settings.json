@@ -1,3 +1,13 @@
 {
-  "cSpell.words": ["MERN", "myorders", "placeorder", "proshop", "Toastify"]
+  "cSpell.words": [
+    "MERN",
+    "mimetypes",
+    "myorders",
+    "orderlist",
+    "placeorder",
+    "productlist",
+    "proshop",
+    "Toastify",
+    "userlist"
+  ]
 }
