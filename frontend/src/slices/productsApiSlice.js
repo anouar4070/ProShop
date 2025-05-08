@@ -7,6 +7,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: PRODUCTS_URL,
       }),
+      providesTags: ['Product'],
       keepUnusedDataFor: 5,
     }),
 
@@ -24,6 +25,15 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Product'],
     }),
+
+    updateProduct: builder.mutation({
+      query: (data) => ({
+        url: `${PRODUCTS_URL}/${data.productId}`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Product'],
+    }),
   }),
 });
 
@@ -31,4 +41,11 @@ export const {
   useGetProductsQuery,
   useGetProductDetailsQuery,
   useCreateProductMutation,
+  useUpdateProductMutation,
 } = productsApiSlice;
+
+
+// | Property          | Function                                              |
+// | ---------------- | ----------------------------------------------------- |
+// | `providesTags`    | "This `query` provides the data for this tag"         |
+// | `invalidatesTags` | "This `mutation` marks the data as outdated for this tag"|
