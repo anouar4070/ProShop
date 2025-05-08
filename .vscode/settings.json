@@ -1,3 +1,12 @@
 {
-  "cSpell.words": ["MERN", "myorders", "placeorder", "proshop", "Toastify"]
+  "cSpell.words": [
+    "MERN",
+    "myorders",
+    "orderlist",
+    "placeorder",
+    "productlist",
+    "proshop",
+    "Toastify",
+    "userlist"
+  ]
 }
