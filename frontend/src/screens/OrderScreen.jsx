@@ -236,7 +236,8 @@ export default OrderScreen;
 
 
 
-{/* <PayPalButtons
+{/*    *** we can use this enhanced button ***
+   <PayPalButtons
 createOrder={(data, actions) => {
   console.log(
     "PayPal Button Clicked, Opening Checkout"
