@@ -99,8 +99,13 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @route GET /api/orders
 // @access Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
-  res.send("Get all orders");
+  const orders = await Order.find({}).populate("user", "id name");
+  res.status(200).json(orders);
 });
+/**    *** Breakdown of .populate('user', 'id name'): ***
+  'user' is the field in the Order schema that contains a reference to a User document (typically stored as an ObjectId).
+  'id name' is the projection: it tells Mongoose to include only the id and name fields from the User document, rather than the entire user object.
+ */
 
 export {
   addOrderItems,
