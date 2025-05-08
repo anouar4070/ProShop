@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-//import { FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { useProfileMutation } from "../slices/usersApiSlice";
-//import { useGetMyOrdersQuery } from "../slices/ordersApiSlice";
+import { useGetMyOrdersQuery } from "../slices/ordersApiSlice";
 import { setCredentials } from "../slices/authSlice";
 
 const ProfileScreen = () => {
@@ -20,10 +20,11 @@ const ProfileScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  //const { data: orders, isLoading, error } = useGetMyOrdersQuery();
-
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
+
+
+  const { data: orders, isLoading, error } = useGetMyOrdersQuery();
 
   useEffect(() => {
     if (userInfo) {
@@ -108,7 +109,7 @@ const ProfileScreen = () => {
         </Form>
       </Col>
       <Col md={9}>
-        {/* <h2>My Orders</h2>
+        <h2>My Orders</h2>
         {isLoading ? (
           <Loader />
         ) : error ? (
@@ -161,10 +162,22 @@ const ProfileScreen = () => {
               ))}
             </tbody>
           </Table>
-        )} */}
+        )}
       </Col>
     </Row>
   );
 };
 
 export default ProfileScreen;
+
+
+
+/*    🔍 Role of .unwrap():
+When you call a mutation or query using RTK Query, like in updateProfile(...), it returns a special async "thunk" that wraps the response with metadata (such as success, error, status, etc.).
+
+.unwrap() is used to extract the actual response data from this wrapped promise.
+
+If the request fails, .unwrap() will throw the error as a real JavaScript exception, allowing you to handle it using try/catch.
+ 
+ */
+ 
