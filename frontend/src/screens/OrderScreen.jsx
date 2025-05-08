@@ -16,6 +16,7 @@ import {
   useGetOrderDetailsQuery,
   useGetPayPalClientIdQuery,
   usePayOrderMutation,
+  useDeliverOrderMutation,
 } from "../slices/ordersApiSlice";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -34,6 +35,10 @@ const OrderScreen = () => {
   console.log(order);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
+
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
   const {
@@ -104,12 +109,22 @@ const OrderScreen = () => {
       });
   }
 
+  const deliverOrderHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order delivered");
+    } catch (err) {
+      toast.error(err?.data?.message || err.message);
+    }
+  };
+
   return isLoading ? (
     <Loader />
   ) : error ? (
     <Message variant="danger">{error?.data?.message || error?.message}</Message>
-    // <Message variant="danger" />
   ) : (
+    // <Message variant="danger" />
     <>
       <h1>Order {order._id}</h1>
       <Row>
@@ -212,17 +227,32 @@ const OrderScreen = () => {
                         Test Pay Order
                       </Button> */}
                       <div>
-                      <PayPalButtons
-                        createOrder={createOrder}
-                        onApprove={onApprove}
-                        onError={onError}
-                      ></PayPalButtons>
-                    </div></div>
+                        <PayPalButtons
+                          createOrder={createOrder}
+                          onApprove={onApprove}
+                          onError={onError}
+                        ></PayPalButtons>
+                      </div>
+                    </div>
                   )}
                 </ListGroup.Item>
               )}
 
-              {/* MARK AS DELIVERED PLACEHOLDER  */}
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type="button"
+                      className="btn btn-block"
+                      onClick={deliverOrderHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
@@ -233,10 +263,8 @@ const OrderScreen = () => {
 
 export default OrderScreen;
 
-
-
-
-{/*    *** we can use this enhanced button ***
+{
+  /*    *** we can use this enhanced button ***
    <PayPalButtons
 createOrder={(data, actions) => {
   console.log(
@@ -250,4 +278,5 @@ onCancel={() => {
   console.log("PayPal Checkout Cancelled");
   toast.error("Payment cancelled. Please try again.");
 }}
-></PayPalButtons> */}
+></PayPalButtons> */
+}
